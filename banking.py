@@ -6,15 +6,22 @@ class Customer:
         self.first_name = first_name
         self.last_name = last_name
         self.password = password
-        self.checking = float(checking)
-        self.savings = float(savings)
+        self.checking = False if str(checking).lower() == "false" else float(checking)
+        self.savings = False if str(savings).lower() == "false" else float(savings)
         self.active = str(active).strip().lower() == "true"
         self.overdraft_count = int(overdraft_count)
 
+
+
     def display(self):
         print(f"\n--- Account Information for {self.first_name} {self.last_name} ---")
-        print(f"Checking Balance: ${self.checking:.2f}")
-        print(f"Savings Balance : ${self.savings:.2f}")
+
+        if self.checking is not False:
+            print(f"Checking Balance: ${self.checking:.2f}")
+    
+        if self.savings is not False:
+            print(f"Savings Balance : ${self.savings:.2f}")
+            
         print(f"Active: {self.active}")
         print(f"Overdraft Count: {self.overdraft_count}")
 
@@ -52,8 +59,30 @@ class Bank:
         first = input("Enter first name: ")
         last = input("Enter last name: ")
         password = input("Set a password: ")
-        checking = float(input("Initial deposit in checking: "))
-        savings = float(input("Initial deposit in savings: "))
+       
+        print("\nChoose account type:")
+        print("1. Checking Account")
+        print("2. Savings Account")
+        print("3. Both")
+
+        
+
+
+        choice = input("Enter choice (1/2/3): ")
+        checking = False
+        savings = False
+
+        if choice == "1":
+            checking =0.0
+        elif choice == "2":
+            savings = 0.0
+            checking = False
+        elif choice == "3":
+            checking = 0.0
+            savings = 0.0
+        else:
+            print("Invalid choice, account creation canceled.")
+            return
 
         customer = Customer(new_id, first, last, password, checking, savings, True, 0)
         self.customers.append(customer)
@@ -109,6 +138,9 @@ class Bank:
                 break
             else:
                 print("Invalid choice")
+# class Transfer:
+#     def withdraw():
+
 
 
 if __name__ == "__main__":
